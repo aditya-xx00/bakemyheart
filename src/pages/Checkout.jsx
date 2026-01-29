@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { submitToGoogleForm } from '../utils/googleForm';
+import { submitToWeb3Forms } from '../utils/web3forms';
 import { useNavigate } from 'react-router-dom';
 import { Trash2, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -50,23 +50,32 @@ const Checkout = () => {
         };
 
         try {
-            await submitToGoogleForm(orderData);
-            setSubmitStatus('success');
-
-            // Save order to history
-            const orders = JSON.parse(localStorage.getItem('bakemyheart_orders') || '[]');
-            orders.unshift({
+            const result = await submitToWeb3Forms({
                 ...orderData,
-                orderId: Math.random().toString(36).substr(2, 9).toUpperCase(),
-                timestamp: new Date().toISOString()
+                subject: `New Order - ${formData.name}`,
+                cartItems: JSON.stringify(orderData.cartItems) // Convert to string for better display in email
             });
-            localStorage.setItem('bakemyheart_orders', JSON.stringify(orders));
 
-            localStorage.removeItem('bakemyheart_checkout'); // Clear saved data
-            setTimeout(() => {
-                clearCart();
-                navigate('/orders');
-            }, 3000);
+            if (result.success) {
+                setSubmitStatus('success');
+
+                // Save order to history
+                const orders = JSON.parse(localStorage.getItem('bakemyheart_orders') || '[]');
+                orders.unshift({
+                    ...orderData,
+                    orderId: Math.random().toString(36).substr(2, 9).toUpperCase(),
+                    timestamp: new Date().toISOString()
+                });
+                localStorage.setItem('bakemyheart_orders', JSON.stringify(orders));
+
+                localStorage.removeItem('bakemyheart_checkout'); // Clear saved data
+                setTimeout(() => {
+                    clearCart();
+                    navigate('/orders');
+                }, 4000);
+            } else {
+                setSubmitStatus('error');
+            }
         } catch (error) {
             setSubmitStatus('error');
         } finally {
@@ -303,23 +312,58 @@ const Checkout = () => {
                                 padding: '1.25rem',
                                 marginTop: '1rem',
                                 opacity: (isSubmitting || submitStatus === 'success') ? 0.7 : 1,
-                                backgroundColor: submitStatus === 'error' ? '#ef4444' : 'var(--color-secondary)',
+                                backgroundColor: submitStatus === 'error' ? '#ef4444' : submitStatus === 'success' ? '#25D366' : 'var(--color-secondary)',
                                 color: submitStatus === 'error' ? 'white' : 'var(--color-primary)',
                                 cursor: (isSubmitting || submitStatus === 'success') ? 'not-allowed' : 'pointer'
                             }}
                         >
                             {isSubmitting ? 'Placing Order...' :
-                                submitStatus === 'success' ? 'Order Confirmed' :
-                                    submitStatus === 'error' ? 'Order Failed' : 'Confirm Order'}
+                                submitStatus === 'success' ? 'Order Confirmed ✅' :
+                                    submitStatus === 'error' ? 'Order Failed ❌' : 'Confirm Order'}
                         </button>
+
                         {submitStatus === 'success' && (
-                            <div style={{ color: 'green', textAlign: 'center', marginTop: '1rem', fontWeight: 'bold' }}>
-                                Order placed successfully!
+                            <div style={{
+                                backgroundColor: '#ecfdf5',
+                                color: '#065f46',
+                                padding: '1rem',
+                                borderRadius: '8px',
+                                textAlign: 'center',
+                                marginTop: '1rem',
+                                fontWeight: '500',
+                                border: '1px solid #a7f3d0'
+                            }}>
+                                Order placed successfully! Redirecting to orders...
                             </div>
                         )}
+
                         {submitStatus === 'error' && (
-                            <div style={{ color: 'red', textAlign: 'center', marginTop: '1rem', fontWeight: 'bold' }}>
-                                Order is failed ! Order again
+                            <div style={{
+                                backgroundColor: '#fef2f2',
+                                color: '#991b1b',
+                                padding: '1rem',
+                                borderRadius: '8px',
+                                textAlign: 'center',
+                                marginTop: '1rem',
+                                fontWeight: '500',
+                                border: '1px solid #fecaca'
+                            }}>
+                                <p style={{ marginBottom: '0.5rem' }}>Order is failed ! Please check your connection and try again.</p>
+                                <button
+                                    type="button"
+                                    onClick={() => setSubmitStatus('idle')}
+                                    style={{
+                                        backgroundColor: '#991b1b',
+                                        color: 'white',
+                                        padding: '0.4rem 1rem',
+                                        borderRadius: '4px',
+                                        fontSize: '0.85rem',
+                                        border: 'none',
+                                        cursor: 'pointer'
+                                    }}
+                                >
+                                    Try Again
+                                </button>
                             </div>
                         )}
                     </form>

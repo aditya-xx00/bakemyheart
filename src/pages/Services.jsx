@@ -5,8 +5,13 @@ import { mehandiDesigns } from '../data/mehndi';
 const Services = () => {
     const navigate = useNavigate();
 
-    const handleBookCall = (designName) => {
-        navigate('/booking', { state: { serviceName: `Mehndi Design - ${designName}` } });
+    const handleBookCall = (design) => {
+        navigate('/booking', {
+            state: {
+                serviceName: `Mehndi Design - ${design.name}`,
+                serviceImage: design.image
+            }
+        });
     };
 
     return (
@@ -102,7 +107,8 @@ const Services = () => {
                                         display: 'flex',
                                         justifyContent: 'space-between',
                                         alignItems: 'center',
-                                        marginTop: 'auto'
+                                        marginTop: 'auto',
+                                        gap: '0.5rem'
                                     }}>
                                         <span style={{
                                             color: 'var(--color-primary-dark)',
@@ -113,17 +119,18 @@ const Services = () => {
                                         </span>
                                         <button
                                             className="btn-primary"
-                                            onClick={() => handleBookCall(design.name)}
+                                            onClick={() => handleBookCall(design)}
                                             style={{
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 justifyContent: 'center',
                                                 gap: '0.5rem',
-                                                backgroundColor: '#25D366', // WhatsApp/Phone Green
+                                                backgroundColor: '#838031ff', // WhatsApp/Phone Green
                                                 color: 'white',
                                                 padding: '0.75rem 1rem'
                                             }}
                                         >
+                                            <p>consult</p>
                                             <Phone size={18} />
                                         </button>
                                     </div>

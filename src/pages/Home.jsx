@@ -36,7 +36,7 @@ const Home = () => {
                         maxWidth: '600px',
                         margin: '0 auto'
                     }}>
-                        Premium cakes baked with love and the finest ingredients for your special moments.
+                        Pure veg cakes baked with love and the finest ingredients for your special moments.
                     </p>
                 </header>
 

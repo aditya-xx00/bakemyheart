@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { submitToGoogleForm } from '../utils/googleForm';
+import { submitToWeb3Forms } from '../utils/web3forms';
 
 const Booking = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const initialService = location.state?.serviceName || "Birthday Party Planning"; // Default from image, or generic
+    const initialService = location.state?.serviceName || "Birthday Party Planning";
+    const serviceImage = location.state?.serviceImage || "https://images.unsplash.com/photo-1544161515-4ab6ce6db48c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80";
 
     const [formData, setFormData] = useState(() => {
         const saved = localStorage.getItem('bakemyheart_booking');
@@ -39,13 +40,16 @@ const Booking = () => {
         setSubmitStatus('idle');
 
         try {
-            // Re-using the google form utility
-            await submitToGoogleForm(formData);
-            setSubmitStatus('success');
-            localStorage.removeItem('bakemyheart_booking'); // Clear saved data
-            setTimeout(() => {
-                navigate('/');
-            }, 7000);
+            const result = await submitToWeb3Forms(formData);
+            if (result.success) {
+                setSubmitStatus('success');
+                localStorage.removeItem('bakemyheart_booking'); // Clear saved data
+                setTimeout(() => {
+                    navigate('/');
+                }, 5000);
+            } else {
+                setSubmitStatus('error');
+            }
         } catch (error) {
             setSubmitStatus('error');
         } finally {
@@ -85,9 +89,9 @@ const Booking = () => {
 
                     {/* Left Column: Form */}
                     <div>
-                        <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--color-secondary)' }}>Book Online Now</h1>
+                        <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'var(--color-secondary)' }}>Book Appointment</h1>
                         <p style={{ color: 'var(--color-text-light)', marginBottom: '2rem' }}>
-                            Request an appointment to get a call back from our expert planners.
+                            Request an appointment to get a call back from our expert designers to discuss mehndi design.
                         </p>
 
                         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', backgroundColor: 'white', padding: '2rem', borderRadius: 'var(--radius)', boxShadow: 'var(--shadow-sm)' }}>
@@ -172,17 +176,52 @@ const Booking = () => {
                                 }}
                             >
                                 {isSubmitting ? 'Requesting...' :
-                                    submitStatus === 'success' ? 'Request Sent' :
-                                        submitStatus === 'error' ? 'Request Failed' : 'Request Appointment'}
+                                    submitStatus === 'success' ? 'Request Sent ✅' :
+                                        submitStatus === 'error' ? 'Request Failed ❌' : 'Request Appointment'}
                             </button>
+
                             {submitStatus === 'success' && (
-                                <div style={{ color: 'green', textAlign: 'center', marginTop: '1rem', fontWeight: 'bold' }}>
-                                    Appointment Request Sent! We will contact you shortly.
+                                <div style={{
+                                    backgroundColor: '#ecfdf5',
+                                    color: '#065f46',
+                                    padding: '1rem',
+                                    borderRadius: '8px',
+                                    textAlign: 'center',
+                                    marginTop: '1rem',
+                                    fontWeight: '500',
+                                    border: '1px solid #a7f3d0'
+                                }}>
+                                    Appointment Request Sent! We will contact you shortly. Redirecting to home...
                                 </div>
                             )}
+
                             {submitStatus === 'error' && (
-                                <div style={{ color: 'red', textAlign: 'center', marginTop: '1rem', fontWeight: 'bold' }}>
-                                    Failed to send request. Please try again.
+                                <div style={{
+                                    backgroundColor: '#fef2f2',
+                                    color: '#991b1b',
+                                    padding: '1rem',
+                                    borderRadius: '8px',
+                                    textAlign: 'center',
+                                    marginTop: '1rem',
+                                    fontWeight: '500',
+                                    border: '1px solid #fecaca'
+                                }}>
+                                    <p style={{ marginBottom: '0.5rem' }}>Failed to send request. Please check your connection and try again.</p>
+                                    <button
+                                        type="button"
+                                        onClick={() => setSubmitStatus('idle')}
+                                        style={{
+                                            backgroundColor: '#991b1b',
+                                            color: 'white',
+                                            padding: '0.4rem 1rem',
+                                            borderRadius: '4px',
+                                            fontSize: '0.85rem',
+                                            border: 'none',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        Try Again
+                                    </button>
                                 </div>
                             )}
 
@@ -192,8 +231,8 @@ const Booking = () => {
                     {/* Right Column: Image */}
                     <div className="booking-image-container" style={{ height: '700px', borderRadius: 'var(--radius)', overflow: 'hidden' }}>
                         <img
-                            src="https://images.unsplash.com/photo-1544161515-4ab6ce6db48c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                            alt="Booking Mood"
+                            src={serviceImage}
+                            alt={formData.service}
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />
                     </div>
