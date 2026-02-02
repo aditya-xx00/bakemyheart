@@ -39,6 +39,33 @@ const Services = () => {
                     .mehandi-header {
                         margin-bottom: 1.25rem !important;
                     }
+                    .mehandi-card-content {
+                        padding: 1rem !important;
+                    }
+                    .btn-consult {
+                        padding: 0.4rem 0.6rem !important;
+                        font-size: 0.75rem !important;
+                        gap: 0.15rem !important;
+                        white-space: nowrap !important;
+                        text-transform: uppercase !important;
+                    }
+                }
+                @media (max-width: 400px) {
+                    .mehandi-card-content {
+                        padding: 0.75rem !important;
+                    }
+                    .btn-consult {
+                        padding: 0.35rem 0.5rem !important;
+                        font-size: 0.65rem !important;
+                        border-radius: 4px !important;
+                    }
+                    .design-price {
+                        font-size: 1rem !important;
+                    }
+                    .btn-consult svg {
+                        width: 12px !important;
+                        height: 12px !important;
+                    }
                 }
             `}</style>
             <div className="container" style={{ padding: '2rem 2rem 1rem' }}>
@@ -93,7 +120,7 @@ const Services = () => {
                                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                     />
                                 </div>
-                                <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                                <div className="mehandi-card-content" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
                                     <h3 style={{ marginBottom: '0.5rem', fontSize: '1.25rem' }}>{design.name}</h3>
                                     <p style={{
                                         color: 'var(--color-text-light)',
@@ -110,7 +137,7 @@ const Services = () => {
                                         marginTop: 'auto',
                                         gap: '0.5rem'
                                     }}>
-                                        <span style={{
+                                        <span className="design-price" style={{
                                             color: 'var(--color-primary-dark)',
                                             fontSize: '1.2rem',
                                             fontWeight: 'bold'
@@ -118,7 +145,7 @@ const Services = () => {
                                             ₹{design.price}
                                         </span>
                                         <button
-                                            className="btn-primary"
+                                            className="btn-primary btn-consult"
                                             onClick={() => handleBookCall(design)}
                                             style={{
                                                 display: 'flex',
@@ -130,7 +157,7 @@ const Services = () => {
                                                 padding: '0.75rem 1rem'
                                             }}
                                         >
-                                            <p>consult</p>
+                                            <span>consult</span>
                                             <Phone size={18} />
                                         </button>
                                     </div>

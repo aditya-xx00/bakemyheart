@@ -1,37 +1,58 @@
 export const mehandiDesigns = [
     {
         id: 1,
-        name: "Bridal Intricate",
+        name: "Simple Bridal Mehndi",
         image: "/meh1.jpeg",
-        description: "Full hand and leg intricate bridal mehandi design.",
-        price: 2100
+        description: "",
+        price: 2800
     },
     {
         id: 2,
-        name: "Arabic Floral",
+        name: "Traditional Bridal Mehndi",
         image: "/Meh2.jpeg",
-        description: "Elegant floral arabic patterns for hands.",
-        price: 500
+        description: "",
+        price: 3200
     },
     {
         id: 3,
-        name: "Minimalist Chic",
-        image: "/Meh3.jpeg",
-        description: "Simple yet stylish designs for modern look.",
-        price: 300
+        name: "Bridal Mehndi Figured",
+        image: "/Meh4.jpeg",
+        description: "",
+        price: 4100
     },
     {
         id: 4,
-        name: "Festival Special",
-        image: "/Meh4.jpeg",
-        description: "Traditional patterns perfect for festivals.",
-        price: 800
+        name: "Premium Bridal Mehndi",
+        image: "/Meh3.jpeg",
+        description: "",
+        price: 4500
     },
     {
         id: 5,
-        name: "Festival Special",
+        name: "Bridal Mehndi Customized",
+        image: "/Meh7.jpeg",
+        description: "",
+        price: 5500
+    },
+    {
+        id: 6,
+        name: "Heritage Bridal Pattern",
+        image: "/Meh8.jpeg",
+        description: "",
+        price: 5800
+    },
+    {
+        id: 7,
+        name: "Mandala Design",
         image: "/Meh5.jpeg",
-        description: "Traditional patterns perfect for festivals.",
-        price: 800
+        description: "",
+        price: 400
+    },
+    {
+        id: 8,
+        name: "Arabic Mehndi",
+        image: "/Meh6.jpeg",
+        description: "",
+        price: 480
     }
 ];

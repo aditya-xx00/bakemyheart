@@ -1,58 +1,74 @@
 export const products = [
     {
         id: 1,
-        name: "Classic Vanilla Bean [500 gm]",
-        price: 450,
+        name: "Vanilla Cake [500 gm]",
+        price: 300,
         currency: "₹",
-        image: "/Cake1.jpeg",
-        description: "Light and airy vanilla sponge with bean-speckled buttercream."
+        image: "/Cake3.jpeg",
+        description: ""
     },
     {
         id: 2,
-        name: "Dark Chocolate Truffle [500 gm]",
-        price: 650,
+        name: "Butterscotch Cake [500 gm]",
+        price: 350,
         currency: "₹",
-        image: "/Cake2.jpeg",
-        description: "Rich dark chocolate ganache layered between moist chocolate sponge."
+        image: "/Cake1.jpeg",
+        description: ""
     },
     {
         id: 3,
-        name: "Red Velvet Dream [500 gm]",
-        price: 550,
+        name: "Chocolate Cake [500 gm]",
+        price: 380,
         currency: "₹",
-        image: "/Cake3.jpeg",
-        description: "Classic red velvet with tangy cream cheese frosting."
+        image: "/Cake2.jpeg",
+        description: ""
     },
     {
         id: 4,
-        name: "Lemon Blue-berry [500 gm]",
-        price: 500,
+        name: "Pineapple Cake [500 gm]",
+        price: 380,
         currency: "₹",
         image: "/Cake4.jpeg",
-        description: "Zesty lemon cake with fresh blueberry compote filling."
+        description: ""
     },
-    {
+     {
         id: 5,
-        name: "Salted Caramel [500 gm]",
-        price: 600,
+        name: "Biscoff Cake [500 gm]",
+        price: 400,
         currency: "₹",
-        image: "/Cake5.jpeg",
-        description: "Caramel sponge with sea salt caramel drizzle."
+        image: "/Cake7.jpeg",
+        description: ""
     },
     {
         id: 6,
-        name: "Strawberry Fields [500 gm]",
-        price: 550,
+        name: "Black Forest [500 gm]",
+        price: 450,
+        currency: "₹",
+        image: "/Cake5.jpeg",
+        description: ""
+    },
+    {
+        id: 7,
+        name: "Blueberry Cake [500 gm]",
+        price: 450,
         currency: "₹",
         image: "/Cake6.jpeg",
-        description: "Fresh strawberry cream between layers of vanilla sponge."
+        description: ""
     },
-     {
-        id: 7,
-        name: "Strawberry Fields [500 gm]",
-        price: 550,
+    {
+        id: 8,
+        name: "Strawberry Cake [500 gm]",
+        price: 480,
         currency: "₹",
-        image: "/Cake7.jpeg",
-        description: "Fresh strawberry cream between layers of vanilla sponge."
+        image: "/Cake8.jpeg",
+        description: ""
+    },
+    {
+        id: 9,
+        name: "Brownie Cake [500 gm]",
+        price: 580,
+        currency: "₹",
+        image: "/Cake9.jpeg",
+        description: ""
     }
 ];
